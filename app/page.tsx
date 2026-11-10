@@ -61,7 +61,7 @@ const C = {
 } as const;
 
 export default function Landing() {
-  const [lang, setLang] = useState<Lang>("id");
+  const [lang, setLang] = useState<Lang>("en");
   const c = C[lang];
   return (
     <main className="min-h-dvh bg-stone-950 text-stone-100">
@@ -82,7 +82,7 @@ export default function Landing() {
         <p className="mt-5 max-w-2xl text-lg text-stone-300">{c.sub}</p>
         <div className="mt-8 flex flex-wrap gap-3">
           <Link href="/a/topeng-barong" className="rounded-full bg-amber-500 px-6 py-3 font-medium text-stone-950">{c.cta}</Link>
-          <Link href="/admin" className="rounded-full bg-stone-800 px-6 py-3">{c.admin}</Link>
+          <Link href="/admin/login" className="rounded-full bg-stone-800 px-6 py-3">{c.admin}</Link>
         </div>
       </section>
 

@@ -10,7 +10,7 @@ const UI: Record<Lang, { next: string; prev: string; by: string; years: string }
 };
 
 export default function SlidePlayer({ art }: { art: Artwork }) {
-  const [lang, setLang] = useState<Lang>("id");
+  const [lang, setLang] = useState<Lang>("en");
   const [i, setI] = useState(0);
   const [dir, setDir] = useState(1);
   const [startX, setStartX] = useState<number | null>(null);
