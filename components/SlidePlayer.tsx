@@ -27,7 +27,7 @@ export default function SlidePlayer({ art }: { art: Artwork }) {
 
   return (
     <main
-      className="mx-auto flex min-h-dvh max-w-md flex-col bg-stone-950 text-stone-100"
+      className="relative flex h-dvh w-full flex-col overflow-hidden bg-stone-950 text-stone-100"
       onTouchStart={(e) => setStartX(e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (startX === null) return;
@@ -36,14 +36,22 @@ export default function SlidePlayer({ art }: { art: Artwork }) {
         setStartX(null);
       }}
     >
-      <header className="flex items-center justify-between p-4">
-        <span className="font-serif text-lg text-amber-400">Yin Karya</span>
+      {/* Full-screen background */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-cover bg-[position:25%_center] md:bg-center"
+        style={{ backgroundImage: "url(/slide-bg.jpg)" }}
+      />
+      <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/40 md:bg-gradient-to-l md:from-black/80 md:via-black/20 md:to-transparent" />
+
+      <header className="relative z-10 flex items-center justify-between p-4">
+        <span className="font-serif text-lg text-amber-400 drop-shadow">Yin Karya</span>
         <div className="flex gap-1">
           {(Object.keys(LABELS) as Lang[]).map((l) => (
             <button
               key={l}
               onClick={() => setLang(l)}
-              className={`rounded-full px-3 py-1 text-sm ${lang === l ? "bg-amber-500 text-stone-950" : "bg-stone-800"}`}
+              className={`rounded-full px-3 py-1 text-sm backdrop-blur ${lang === l ? "bg-amber-500 text-stone-950" : "bg-black/50"}`}
             >
               {LABELS[l]}
             </button>
@@ -51,43 +59,43 @@ export default function SlidePlayer({ art }: { art: Artwork }) {
         </div>
       </header>
 
-      <div key={i} className="flex flex-1 flex-col px-4 animate-[slide_.35s_ease]" style={{ ["--d" as string]: `${dir * 30}px` }}>
-        <div className={`h-64 rounded-2xl bg-gradient-to-br ${art.hue} flex items-end p-4 shadow-lg`}>
-          <span className="rounded bg-black/40 px-2 py-1 text-xs">
+      <div className="relative z-10 flex flex-1 items-end px-4 pb-2 md:items-center md:justify-end md:px-12">
+        <div key={i} className="w-full max-h-[62dvh] overflow-y-auto rounded-2xl bg-black/55 p-5 backdrop-blur-md animate-[slide_.35s_ease] md:max-w-lg" style={{ ["--d" as string]: `${dir * 30}px` }}>
+          <span className="rounded bg-white/10 px-2 py-1 text-xs">
             {pick(art.category)} · {art.origin}
           </span>
-        </div>
-        <h1 className="mt-6 font-serif text-3xl text-amber-300">{pick(s.title)}</h1>
-        <p className="mt-3 text-lg leading-relaxed text-stone-200">{pick(s.body)}</p>
-        {s.kind === "artisan" && (
-          <div className="mt-5 rounded-2xl bg-stone-900 p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 font-serif text-xl text-stone-950">
-                {art.profile.name.split(" ").slice(-1)[0][0]}
+          <h1 className="mt-3 font-serif text-3xl text-amber-300">{pick(s.title)}</h1>
+          <p className="mt-2 text-lg leading-relaxed text-stone-100">{pick(s.body)}</p>
+          {s.kind === "artisan" && (
+            <div className="mt-4 rounded-xl bg-white/10 p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-500 font-serif text-xl text-stone-950">
+                  {art.profile.name.split(" ").slice(-1)[0][0]}
+                </div>
+                <div>
+                  <div className="font-medium">{art.profile.name}</div>
+                  <div className="text-sm text-amber-300">{pick(art.profile.specialty)}</div>
+                </div>
               </div>
-              <div>
-                <div className="font-medium">{art.profile.name}</div>
-                <div className="text-sm text-amber-300">{pick(art.profile.specialty)}</div>
-              </div>
+              <p className="mt-3 text-sm text-stone-200">{pick(art.profile.bio)}</p>
+              <p className="mt-2 text-xs text-stone-300">
+                {art.profile.years} {UI[lang].years}
+              </p>
             </div>
-            <p className="mt-3 text-sm text-stone-300">{pick(art.profile.bio)}</p>
-            <p className="mt-2 text-xs text-stone-400">
-              {art.profile.years} {UI[lang].years}
+          )}
+          {s.kind === "cover" && (
+            <p className="mt-3 text-sm text-stone-300">
+              {UI[lang].by} {art.artisan}
             </p>
-          </div>
-        )}
-        {s.kind === "cover" && (
-          <p className="mt-4 text-sm text-stone-400">
-            {UI[lang].by} {art.artisan}
-          </p>
-        )}
+          )}
+        </div>
       </div>
 
-      <footer className="flex items-center justify-between p-4">
-        <button onClick={() => go(-1)} disabled={i === 0} className="rounded-full bg-stone-800 px-5 py-3 disabled:opacity-30">
+      <footer className="relative z-10 flex items-center justify-between p-4">
+        <button onClick={() => go(-1)} disabled={i === 0} className="rounded-full bg-black/50 px-5 py-3 backdrop-blur disabled:opacity-30">
           {UI[lang].prev}
         </button>
-        <span className="text-sm text-stone-400">
+        <span className="rounded-full bg-black/50 px-3 py-1 text-sm backdrop-blur">
           {i + 1}/{n}
         </span>
         <button onClick={() => go(1)} disabled={i === n - 1} className="rounded-full bg-amber-500 px-5 py-3 font-medium text-stone-950 disabled:opacity-30">
