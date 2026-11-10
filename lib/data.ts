@@ -2,11 +2,13 @@ export type Lang = "id" | "en" | "zh";
 export type L10n = Record<Lang, string>;
 
 export type Slide = { kind: string; title: L10n; body: L10n };
+export type Artisan = { name: string; years: number; specialty: L10n; bio: L10n };
 export type Artwork = {
   slug: string;
   name: L10n;
   category: L10n;
   artisan: string;
+  profile: Artisan;
   origin: string;
   hue: string; // gradient placeholder for photo
   slides: Slide[];
@@ -20,6 +22,12 @@ export const artworks: Artwork[] = [
     name: t("Topeng Barong", "Barong Mask", "巴龙面具"),
     category: t("Seni Ukir", "Wood Carving", "木雕"),
     artisan: "I Wayan Sudarta",
+    profile: {
+      name: "I Wayan Sudarta",
+      years: 28,
+      specialty: t("Topeng & patung kayu sakral", "Sacred masks & wood sculpture", "神圣面具与木雕"),
+      bio: t("Lahir di Mas, Ubud, dari keluarga pemahat. Ia belajar dari ayahnya dan kini melatih generasi muda di desanya.", "Born in Mas, Ubud, into a family of carvers. He learned from his father and now trains young carvers in his village.", "出生于乌布马斯村的雕刻世家，师从父亲，如今在村里培养年轻一代。"),
+    },
     origin: "Mas, Ubud, Bali",
     hue: "from-amber-700 via-red-800 to-stone-900",
     slides: [
@@ -37,6 +45,12 @@ export const artworks: Artwork[] = [
     name: t("Perhiasan Perak Celuk", "Celuk Silver Jewelry", "切鲁克银饰"),
     category: t("Kerajinan Perak", "Silversmithing", "银器工艺"),
     artisan: "Ni Made Ayu Lestari",
+    profile: {
+      name: "Ni Made Ayu Lestari",
+      years: 20,
+      specialty: t("Filigri & perhiasan perak", "Filigree & silver jewelry", "银丝工艺与银饰"),
+      bio: t("Perajin perak generasi ketiga di Celuk. Ia memadukan motif tradisional dengan desain kontemporer.", "Third-generation silversmith in Celuk, blending traditional motifs with contemporary design.", "切鲁克第三代银匠，将传统纹样与现代设计相融合。"),
+    },
     origin: "Celuk, Gianyar, Bali",
     hue: "from-slate-500 via-slate-700 to-stone-900",
     slides: [

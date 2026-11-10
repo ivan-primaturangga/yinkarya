@@ -3,10 +3,10 @@ import { useState } from "react";
 import type { Artwork, Lang } from "@/lib/data";
 
 const LABELS: Record<Lang, string> = { id: "ID", en: "EN", zh: "中文" };
-const UI: Record<Lang, { next: string; prev: string; by: string }> = {
-  id: { next: "Lanjut", prev: "Kembali", by: "Oleh" },
-  en: { next: "Next", prev: "Previous", by: "By" },
-  zh: { next: "下一页", prev: "上一页", by: "作者" },
+const UI: Record<Lang, { next: string; prev: string; by: string; years: string }> = {
+  id: { next: "Lanjut", prev: "Kembali", by: "Oleh", years: "tahun berkarya" },
+  en: { next: "Next", prev: "Previous", by: "By", years: "years of craft" },
+  zh: { next: "下一页", prev: "上一页", by: "作者", years: "年创作经验" },
 };
 
 export default function SlidePlayer({ art }: { art: Artwork }) {
@@ -59,6 +59,23 @@ export default function SlidePlayer({ art }: { art: Artwork }) {
         </div>
         <h1 className="mt-6 font-serif text-3xl text-amber-300">{pick(s.title)}</h1>
         <p className="mt-3 text-lg leading-relaxed text-stone-200">{pick(s.body)}</p>
+        {s.kind === "artisan" && (
+          <div className="mt-5 rounded-2xl bg-stone-900 p-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-amber-500 font-serif text-xl text-stone-950">
+                {art.profile.name.split(" ").slice(-1)[0][0]}
+              </div>
+              <div>
+                <div className="font-medium">{art.profile.name}</div>
+                <div className="text-sm text-amber-300">{pick(art.profile.specialty)}</div>
+              </div>
+            </div>
+            <p className="mt-3 text-sm text-stone-300">{pick(art.profile.bio)}</p>
+            <p className="mt-2 text-xs text-stone-400">
+              {art.profile.years} {UI[lang].years}
+            </p>
+          </div>
+        )}
         {s.kind === "cover" && (
           <p className="mt-4 text-sm text-stone-400">
             {UI[lang].by} {art.artisan}
