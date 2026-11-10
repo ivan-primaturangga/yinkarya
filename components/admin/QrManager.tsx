@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 import QRCode from "qrcode";
-import type { Artwork } from "@/lib/data";
+import { useArtworks } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function QrManager({ arts }: { arts: Artwork[] }) {
+export default function QrManager() {
+  const { arts } = useArtworks();
   const [qrs, setQrs] = useState<Record<string, string>>({});
   async function make(slug: string) {
     setQrs((q) => ({ ...q, [slug]: "" }));
@@ -17,7 +18,7 @@ export default function QrManager({ arts }: { arts: Artwork[] }) {
       {arts.map((a) => (
         <Card key={a.slug}>
           <CardHeader>
-            <CardTitle>{a.name.en}</CardTitle>
+            <CardTitle>{a.name.en || a.name.id}</CardTitle>
             <CardDescription><code>/a/{a.slug}</code> · stays the same when content is edited</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">

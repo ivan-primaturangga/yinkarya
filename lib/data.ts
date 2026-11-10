@@ -12,6 +12,7 @@ export type Artwork = {
   origin: string;
   hue: string; // gradient placeholder for photo
   slides: Slide[];
+  status?: "published" | "draft";
 };
 
 const t = (id: string, en: string, zh: string): L10n => ({ id, en, zh });

@@ -30,7 +30,7 @@ export default function SlidePlayer({ art }: { art: Artwork }) {
   const [dir, setDir] = useState(1);
   const [startX, setStartX] = useState<number | null>(null);
   const n = art.slides.length;
-  const s = art.slides[i];
+  const s = art.slides[i] ?? { kind: "intro", title: { id: "", en: "", zh: "" }, body: { id: "", en: "", zh: "" } };
   const go = (d: number) => {
     const next = Math.min(n - 1, Math.max(0, i + d));
     if (next !== i) {

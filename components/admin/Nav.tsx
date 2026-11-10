@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const items = [
   { href: "/admin", label: "Dashboard" },
+  { href: "/admin/artworks", label: "Artworks" },
   { href: "/admin/qr", label: "QR Codes" },
   { href: "/admin/ai", label: "AI Studio" },
 ];
